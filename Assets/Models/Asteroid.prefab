@@ -102,6 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 3
   maxSpeed: 6
+  maxRotationSpeed: 30
+  minMaxScale: {x: 2, y: 7}
 --- !u!135 &5882086078362184248
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float maxSpeed = 6f;
     [SerializeField] private float maxRotationSpeed = 30f;
-    [SerializeField] private Vector2 minMaxScale = new Vector2(1000f, 2500f);
+    [SerializeField] private Vector2 minMaxScale = new Vector2(2f, 7f);
     private float speed;
     private Vector3 rotationSpeed;
     private float scale;
