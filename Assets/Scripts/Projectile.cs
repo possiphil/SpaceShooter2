@@ -35,12 +35,12 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         other.GetComponent<Enemy>().SetSpeedAndPosition();
-        Player.score += 100;
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        
+        bool isMissingScore = GameLogic.HandleScoreIncrease();
 
-        if (Player.score == 5000)
+        if (isMissingScore)
         {
-            SceneManager.LoadScene(2);
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
     }
 }

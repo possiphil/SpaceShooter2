@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5718274322960317445}
   - component: {fileID: 1568646134411319864}
   - component: {fileID: 3967346416641651515}
-  - component: {fileID: 3789657690911760269}
   - component: {fileID: 8973978691016430420}
   - component: {fileID: 6732980265479156641}
+  - component: {fileID: -1065201783796074764}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -110,20 +110,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3789657690911760269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3787550222178865317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccb94287f1d6d749a1246efd62cb2bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 25395172098757518, guid: f9ed277ad87018143b7284b9921fe88f, type: 3}
-  projectileSpeed: 10
 --- !u!82 &8973978691016430420
 AudioSource:
   m_ObjectHideFlags: 0
@@ -247,3 +233,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-1065201783796074764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787550222178865317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccb94287f1d6d749a1246efd62cb2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 25395172098757518, guid: f9ed277ad87018143b7284b9921fe88f, type: 3}
+  projectileSpeed: 10

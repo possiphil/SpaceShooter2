@@ -78,9 +78,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fdc4ad1659c7ec14c84d4c691f0a6990, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8841779117006584758}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fdc4ad1659c7ec14c84d4c691f0a6990, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1922943346509546316}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fdc4ad1659c7ec14c84d4c691f0a6990, type: 3}
       insertIndex: -1
@@ -91,25 +88,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fdc4ad1659c7ec14c84d4c691f0a6990, type: 3}
   m_PrefabInstance: {fileID: 2982206123996533752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8841779117006584758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2712158162856963753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ed1677a64ef08a489a6d74d960d8cbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameInput: {fileID: 0}
-  scoreUI: {fileID: 0}
-  livesUI: {fileID: 0}
-  playerSpeed: 5
-  projectilePrefab: {fileID: 3787550222178865317, guid: 9ca3fe5cb6669914a891fd11c9904718, type: 3}
-  asteroid: {fileID: 2917458779660937056, guid: 60aba332c1a8202408e96a2f295d0405, type: 3}
-  offset: 1
 --- !u!135 &1922943346509546316
 SphereCollider:
   m_ObjectHideFlags: 0
