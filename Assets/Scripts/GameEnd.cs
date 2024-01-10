@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameEnd : MonoBehaviour
 {
-    void Update()
+
+    //braucht andere Logik
+    /*void Update()
     {
         if (Input.anyKey)
         {
             SceneManager.LoadScene(0);
         }
-    }
+    }*/
 }

@@ -7,9 +7,9 @@ public class MainMenu : MonoBehaviour
 {
     void Update()
     {
-        if (Input.anyKey)
+        /*if (Input.anyKey)
         {
-            SceneManager.LoadScene(1);
-        }
+            SceneManager.LoadScene(0);
+        }*/
     }
 }
