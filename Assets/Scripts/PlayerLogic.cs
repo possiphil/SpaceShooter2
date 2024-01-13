@@ -43,6 +43,7 @@ public class PlayerLogic : MonoBehaviour
             if (hasLivesLeft)
             {
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                SoundManager.soundManager.PlayExplosionSound();
                 StartCoroutine(HandleHit());
             }
         }

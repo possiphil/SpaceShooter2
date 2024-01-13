@@ -41,6 +41,7 @@ public class Projectile : MonoBehaviour
         if (isMissingScore)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            SoundManager.soundManager.PlayExplosionSound();
         }
     }
 }

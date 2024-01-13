@@ -60,7 +60,7 @@ public class MenuController : MonoBehaviour
 
     public void setVolume(float volume)
     {
-        AudioListener.volume = volume;
+        AudioListener.volume = volume/100f;
         volumeTextValue.text = volume.ToString("0");
     }
 
