@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     
     [SerializeField] private bool isInvincible;
+    [SerializeField] private GameObject losingCanvas;
     
     private PlayerState playerState = PlayerState.Vulnerable;
     
@@ -39,6 +42,14 @@ public class PlayerLogic : MonoBehaviour
             other.GetComponent<Enemy>().SetSpeedAndPosition();
 
             bool hasLivesLeft = GameLogic.HandleLiveDecrease();
+            if (!hasLivesLeft)
+            {
+                losingCanvas.SetActive(true);
+                StartCoroutine(GradualTimeScaleChange(0.1f, 1f, 1f));
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                SoundManager.soundManager.PlayExplosionSound();
+                playerModel.SetActive(false);
+            }
 
             if (hasLivesLeft)
             {
@@ -62,5 +73,28 @@ public class PlayerLogic : MonoBehaviour
         }
         modelRenderer.enabled = true;
         playerState = PlayerState.Vulnerable;
+    }
+    private IEnumerator GradualTimeScaleChange(float targetTimeScale, float duration, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        float currentTime = 0f;
+        float initialTimeScale = Time.timeScale;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            Time.timeScale = Mathf.Lerp(initialTimeScale, targetTimeScale, currentTime / duration);
+            yield return null;
+        }
+
+        Time.timeScale = targetTimeScale; // Ensure that the target timescale is set precisely
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1f;
     }
 }

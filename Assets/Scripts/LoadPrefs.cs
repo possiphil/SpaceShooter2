@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Video;
 
 public class LoadPrefs : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class LoadPrefs : MonoBehaviour
     [Header("Volume Setting")]
     [SerializeField] private TMP_Text volumeTextValue = null;
     [SerializeField] private Slider volumeSlider = null;
+    [SerializeField] private GameObject videoPlayerObject; 
+    private VideoPlayer videoPlayer;
 
 
 
@@ -22,10 +25,13 @@ public class LoadPrefs : MonoBehaviour
         {
             if(PlayerPrefs.HasKey("masterVolume"))
             {
+                videoPlayer = videoPlayerObject.GetComponent<VideoPlayer>();
+
                 float localVolume = PlayerPrefs.GetFloat("masterVolume");
                 volumeTextValue.text = localVolume.ToString("0");
                 volumeSlider.value = localVolume;
                 AudioListener.volume = localVolume;
+                videoPlayer.SetDirectAudioVolume(0, localVolume);
             }
             else{
                 menuController.ResetButton("Audio");

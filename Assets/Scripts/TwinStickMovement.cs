@@ -120,6 +120,7 @@ public class TwinStickMovement : MonoBehaviour
         }
     }
 
+
     public void OnDeviceChange(PlayerInput input)
     {
         isGamepad = input.currentControlScheme.Equals("Gamepad");
