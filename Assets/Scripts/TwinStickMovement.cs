@@ -116,8 +116,10 @@ public class TwinStickMovement : MonoBehaviour
         {
             Instantiate(bulletModel, firePoint.position, firePoint.rotation);
             cooldown = SHOOTING_COOLDOWN;
+            SoundManager.soundManager.PlayFiringSound();
         }
     }
+
 
     public void OnDeviceChange(PlayerInput input)
     {

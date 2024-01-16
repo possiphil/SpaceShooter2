@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Video;
 
 public class MenuController : MonoBehaviour
 {
@@ -29,7 +30,14 @@ public class MenuController : MonoBehaviour
     private string levelToLoad;
     [SerializeField] private GameObject noSavedGameDialog = null;
 
+    [Header("VideoPlayer Settings")]
+    [SerializeField] private GameObject videoPlayerObject;
+    private VideoPlayer videoPlayer;
 
+    private void Start()
+    {
+        videoPlayer = videoPlayerObject.GetComponent<VideoPlayer>();
+    }
 
     //LoadsNewGame
     public void NewGameDialogYes()
@@ -60,8 +68,12 @@ public class MenuController : MonoBehaviour
 
     public void setVolume(float volume)
     {
-        AudioListener.volume = volume;
+        AudioListener.volume = volume/100f;
         volumeTextValue.text = volume.ToString("0");
+       if (videoPlayer != null)
+    {
+        videoPlayer.SetDirectAudioVolume(0, volume / 100f);
+    }
     }
 
     public void VolumeApply()

@@ -15,6 +15,7 @@ public class GameLogic : MonoBehaviour
     
     public static int score;
     public static int lives = 3;
+    [SerializeField] private GameObject losingCanvas;
 
     private void Start()
     {
@@ -43,13 +44,14 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+
     public static bool HandleLiveDecrease()
     {
         lives--;
 
         if (lives <= 0)
         {
-            SceneManager.LoadScene(3);
+            //SceneManager.LoadScene(3);
             return false;
         }
 
