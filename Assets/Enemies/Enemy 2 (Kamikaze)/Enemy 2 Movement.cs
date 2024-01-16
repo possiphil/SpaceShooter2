@@ -3,23 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class Enemy2Movement : MonoBehaviour
 {
-    [SerializeField] private float enemy2speed = 5f;
+    [SerializeField] private float enemy2speed = 10f;
     [SerializeField] public float distanceToExplode = 1f;
 
     [SerializeField] public GameObject explosionEnemy2;
 
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     public Transform player;
-    private Vector2 movement;
+    private Vector3 movement;
+
+    [SerializeField] private int Health = 5;
+    private int currentHealth;
 
     private void Start()
     {
-        rb = this.GetComponent<Rigidbody2D>();
+        currentHealth = Health;
+        
+        rb = this.GetComponent<Rigidbody>();
+      
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -31,12 +38,17 @@ public class Enemy2Movement : MonoBehaviour
     private void Update()
     {
         Vector3 direction = player.position - transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
         
         direction.Normalize();
         movement = direction;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+       
+        rb.MoveRotation(rotation);
+        
+        
     }
 
     private void FixedUpdate()
@@ -53,9 +65,31 @@ public class Enemy2Movement : MonoBehaviour
         }
     }
 
-    private void moveEnemy(Vector2 direction)
+    private void moveEnemy(Vector3 direction)
     {
-        rb.MovePosition((Vector2)transform.position + (enemy2speed * Time.deltaTime * direction));
+        rb.MovePosition(transform.position + (enemy2speed * Time.deltaTime * direction));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerProjectile"))
+        {
+            TakeDamage(1);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            DestroyEnemy();
+        }
+    }
+
+    private void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }
 

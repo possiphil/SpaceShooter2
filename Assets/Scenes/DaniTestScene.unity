@@ -269,6 +269,7 @@ MonoBehaviour:
   playerModel: {fileID: 1049729629}
   explosionPrefab: {fileID: 25395172098757518, guid: f9ed277ad87018143b7284b9921fe88f, type: 3}
   isInvincible: 0
+  losingCanvas: {fileID: 0}
 --- !u!114 &807945349
 MonoBehaviour:
   m_ObjectHideFlags: 0
