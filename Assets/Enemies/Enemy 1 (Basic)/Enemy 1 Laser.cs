@@ -13,7 +13,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     [SerializeField] private float destroyAfterSeconds;
 
-    public static float Damage = 1;
+    private bool isDestroyed = false;
 
 
     private void Start()
@@ -55,7 +55,13 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void DestroyBullet()
     {
-        Destroy(gameObject);
+        if (!isDestroyed)
+        {
+            isDestroyed = true;
+            
+            Destroy(gameObject);
+        }
+      
     }
     
 }

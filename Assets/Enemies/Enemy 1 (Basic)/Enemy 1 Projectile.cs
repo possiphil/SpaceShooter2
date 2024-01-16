@@ -16,18 +16,18 @@ public class Enemy1Projectile : MonoBehaviour
 
   [SerializeField] private string playerTag = "Player";
   [SerializeField] private string enemyTag = "Enemy";
-  [SerializeField] private string projectileTag = "Projectile";
+  [SerializeField] private GameObject projectilePrefab;//projectileTag = "Projectile";
 
 
   private Transform playerTransform;
   private Transform enemyTransform;
-  private GameObject projectilePrefab;
+  //private GameObject projectilePrefab;
 
   private void Start()
   {
      GameObject playerObject = GameObject.FindWithTag(playerTag);
      GameObject enemyObject = GameObject.FindGameObjectWithTag(enemyTag);
-     projectilePrefab = GameObject.FindGameObjectWithTag(projectileTag);
+    // projectilePrefab = GameObject.FindGameObjectWithTag(projectileTag);
 
      playerTransform = playerObject.transform;
      enemyTransform = enemyObject.transform;
@@ -54,7 +54,7 @@ public class Enemy1Projectile : MonoBehaviour
           
           if (distance < DistanceToShoot)
           {
-            //  Debug.Log("Shooting!");
+            Debug.Log("Shooting!");
               Instantiate(projectilePrefab, transform.position, Quaternion.identity);
           }
       }
