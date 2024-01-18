@@ -1,42 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy3 : MonoBehaviour
 {
-    [SerializeField] private Transform[] phasePoints;
-   [SerializeField] private int numberOfPhasePoints = 5;
-   
+   //Phasing
+   [SerializeField] private Transform[] phasePoints;
    [SerializeField] private float TimeBetweenPhasing;
-
+   //Blinking
    [SerializeField] private int numberOfBlinks = 3;
    [SerializeField] private float timeBetweenBlinks = 2f;
-
+   private bool isBlinking = false;
+   //Components
    private Transform player;
    private Rigidbody rb;
-
-   [SerializeField] private GameObject projectile;
+   //Shooring
+   [SerializeField] private GameObject bigProjectilePrefab;
+   [SerializeField] private GameObject smallProjectilePrefab;
    [SerializeField] private float interval;
    [SerializeField] private float timer;
    [SerializeField] private GameObject enemy;
-
-   private bool isBlinking = false;
-
+   [SerializeField] private Transform[] cannons;
+   //TeleportInSight
+   private bool isTeleporting = false;
+   //Movement
    private Vector3 movement;
 
-   private Renderer EnemyRenderer;
+ 
   
 
    private void Start()
    {
       GetNeededComponents();
-      GenerateRandomPhasePoints();
       StartCoroutine(PhaseLoop());
     
    }
 
    private void Update()
    {
+      LookToPlayer();
+    
       timer += Time.deltaTime;
       if (!isBlinking && timer >= interval)
       {
@@ -44,60 +49,60 @@ public class Enemy3 : MonoBehaviour
          timer = 0;
       }
 
-      LookToPlayer();
-   }
-
-
-   private void GenerateRandomPhasePoints()
-   {
-      phasePoints = new Transform[numberOfPhasePoints];
-
-      float screenHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
-      float screenHalfHeight = Camera.main.orthographicSize;
-
-      for (int i = 0; i < numberOfPhasePoints; i++)
+      if (!isTeleporting)
       {
-         float randomX = Random.Range(-screenHalfWidth, screenHalfWidth);
-         float randomY = Random.Range(-screenHalfHeight, screenHalfHeight);
-
-         GameObject point = new GameObject("PhasePoint_" + i);
-         point.transform.position = new Vector3(randomX, randomY, 0f);
-
-         phasePoints[i] = point.transform;
+         StartCoroutine(TeleportInSight());
       }
+
+      
    }
    
    private IEnumerator Blink()
    {
 
       isBlinking = true;
+
+      Renderer[] childRenderes = GetComponentsInChildren<Renderer>(true);
+      
          for (int blinkCount = 0; blinkCount < numberOfBlinks; blinkCount++)
          {
-            if (EnemyRenderer != null)
+            foreach (Renderer childRenderer in childRenderes)
             {
-               GetComponent<Renderer>().enabled = false;
-               EnemyRenderer.enabled = false;
-               yield return new WaitForSeconds(timeBetweenBlinks);
-
-               GetComponent<Renderer>().enabled = true;
-               EnemyRenderer.enabled = true;
-               yield return new WaitForSeconds(timeBetweenBlinks);
+               if (childRenderer != null)
+               {
+                //  Debug.Log("Renderer Enabled: " + childRenderer.enabled);
+                  childRenderer.enabled = false;
+               }
             }
+
+            yield return new WaitForSeconds(timeBetweenBlinks);
+
+            foreach (Renderer childRenderer in childRenderes)
+            {
+               if (childRenderer != null)
+               {
+                 // Debug.Log("Renderer Enabled: " + childRenderer.enabled);
+                  childRenderer.enabled = true;
+               }
+            }
+
+            yield return new WaitForSeconds(timeBetweenBlinks);
          }
+            
+            
+         
 
          isBlinking = false;
+         
    }
-
+   
    private IEnumerator Teleport()
    { 
    // Debug.Log("Teleport");
-         int nextPosition = Random.Range(0, phasePoints.Length);
+   Vector3 randomPosition = GetRandomPointInCameraView();
+   transform.position = randomPosition;
 
-         transform.position = phasePoints[nextPosition].position;
-
-         yield return new WaitForSeconds(TimeBetweenPhasing);
-         
-      
+   yield return new WaitForSeconds(1f);
    }
 
    private IEnumerator PhaseLoop()
@@ -118,25 +123,42 @@ public class Enemy3 : MonoBehaviour
       player = playerObject.transform;
       
       Renderer[] childRenderers = GetComponentsInChildren<Renderer>(true);
-      
-         EnemyRenderer = childRenderers[0];
-   }
+      if (childRenderers.Length > 0)
+      {
+         //EnemyRenderer = childRenderers[0];
+      }
+      else
+      {
+         Debug.Log("No renderer found on child object");
+      }
 
+      cannons = new Transform[4];
+      cannons[0] = transform.Find("Cannon1");
+      cannons[1] = transform.Find("Cannon2");
+      cannons[2] = transform.Find("Cannon3");
+      cannons[3] = transform.Find("Cannon4");
+      
+   }
    
 
    private void Shoot()
    {
-      //Debug.Log("Shooting");
-      
-      Transform playerTransform = player.transform;
-      Transform enemyTransform = enemy.transform;
-
-      float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
-
-      if (distance <= 10f)
+      for (int i = 0; i < cannons.Length; i++)
       {
-         Instantiate(projectile, transform.position, Quaternion.identity);
+        
+
+         if (i == 0 || i == 3)
+         {
+            Instantiate(bigProjectilePrefab, cannons[i].position, cannons[i].rotation);
+         }
+         else if (i == 1 || i == 2)
+         {
+            Instantiate(smallProjectilePrefab, cannons[i].position, cannons[i].rotation);
+         
+         }
+        
       }
+      
    }
 
    private void LookToPlayer()
@@ -151,5 +173,34 @@ public class Enemy3 : MonoBehaviour
 
 
       rb.MoveRotation(rotation);
+   }
+
+   private IEnumerator TeleportInSight()
+   {
+      isTeleporting = true;
+      if (!IsInCamerView())
+      {
+         Vector3 randomPosition = GetRandomPointInCameraView();
+         transform.position = randomPosition;
+         yield return new WaitForSeconds(5f);
+      }
+      isTeleporting = false;
+   }
+
+   private bool IsInCamerView()
+   {
+      Vector3 viewPointposition = Camera.main.WorldToViewportPoint(transform.position);
+      return viewPointposition.x >= 0 && viewPointposition.x <= 1 && viewPointposition.y >= 0 && viewPointposition.y <= 1;
+   }
+
+   private Vector3 GetRandomPointInCameraView()
+   {
+      float screenHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
+      float screenHalfHeight = Camera.main.orthographicSize;
+
+      float randomX = Random.Range(-screenHalfWidth, screenHalfWidth);
+      float randomY = Random.Range(-screenHalfHeight, screenHalfHeight);
+
+      return new Vector3(randomX, randomY, 0f);
    }
 }
