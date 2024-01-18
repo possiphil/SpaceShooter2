@@ -6,9 +6,13 @@ using Random = UnityEngine.Random;
 
 public class Enemy3 : MonoBehaviour
 {
-   //Phasing
-   [SerializeField] private Transform[] phasePoints;
-   [SerializeField] private float TimeBetweenPhasing;
+   //Teleport
+   [SerializeField] private float teleportDistance = 2000f;
+   [SerializeField] private float teleportRadius = 10f;
+   [SerializeField] private float timeBetweenTeleports = 15f;
+   [SerializeField] private float timeAtFarAwayPosition = 5f;
+
+   private bool isFarAway = false;
    //Blinking
    [SerializeField] private int numberOfBlinks = 3;
    [SerializeField] private float timeBetweenBlinks = 2f;
@@ -24,17 +28,22 @@ public class Enemy3 : MonoBehaviour
    [SerializeField] private GameObject enemy;
    [SerializeField] private Transform[] cannons;
    //TeleportInSight
-   private bool isTeleporting = false;
+  // private bool isTeleporting = false;
+  
    //Movement
    private Vector3 movement;
+   //Health
+   private int Health = 5;
+   private int currentHealth;
 
  
   
 
    private void Start()
    {
+      currentHealth = Health;
       GetNeededComponents();
-      StartCoroutine(PhaseLoop());
+      StartCoroutine(TeleportLoop());
     
    }
 
@@ -43,18 +52,16 @@ public class Enemy3 : MonoBehaviour
       LookToPlayer();
     
       timer += Time.deltaTime;
-      if (!isBlinking && timer >= interval)
+      if (!isBlinking && timer >= interval && !isFarAway)
       {
+        // Debug.Log("Shooting");
          Shoot();
          timer = 0;
       }
-
-      if (!isTeleporting)
+      else
       {
-         StartCoroutine(TeleportInSight());
+        // Debug.Log("Not");
       }
-
-      
    }
    
    private IEnumerator Blink()
@@ -89,30 +96,16 @@ public class Enemy3 : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenBlinks);
          }
             
-            
          
-
          isBlinking = false;
-         
    }
    
-   private IEnumerator Teleport()
-   { 
-   // Debug.Log("Teleport");
-   Vector3 randomPosition = GetRandomPointInCameraView();
-   transform.position = randomPosition;
-
-   yield return new WaitForSeconds(1f);
-   }
-
-   private IEnumerator PhaseLoop()
+   private IEnumerator TeleportLoop()
    {
       while (true)
       {
-         yield return StartCoroutine(Blink());
-         yield return StartCoroutine(Teleport());
-      
-         
+         yield return StartCoroutine(TeleportAway());
+         yield return StartCoroutine(TeleportNearPlayer());
       }
    }
 
@@ -175,32 +168,54 @@ public class Enemy3 : MonoBehaviour
       rb.MoveRotation(rotation);
    }
 
-   private IEnumerator TeleportInSight()
+   private IEnumerator TeleportAway()
    {
-      isTeleporting = true;
-      if (!IsInCamerView())
+      yield return StartCoroutine(Blink());
+      
+      Vector3 randomDirection = Random.onUnitSphere;
+      randomDirection.y = 0;
+
+      Vector3 teleportPosition = player.position + randomDirection * teleportDistance;
+      transform.position = teleportPosition;
+      isFarAway = true;
+
+      yield return new WaitForSeconds(timeAtFarAwayPosition);
+   }
+
+   private IEnumerator TeleportNearPlayer()
+   {
+      Vector3 randomOffset = Random.insideUnitCircle * teleportRadius;
+      Vector3 teleportPosition = player.position + new Vector3(randomOffset.x, randomOffset.y, 0f);
+      transform.position = teleportPosition;
+      isFarAway = false;
+
+      yield return new WaitForSeconds(timeBetweenTeleports);
+   }
+   
+   private void OnTriggerEnter(Collider other)
+   {
+      if (other.CompareTag("PlayerProjectile"))
       {
-         Vector3 randomPosition = GetRandomPointInCameraView();
-         transform.position = randomPosition;
-         yield return new WaitForSeconds(5f);
+         TakeDamage(1);
       }
-      isTeleporting = false;
    }
-
-   private bool IsInCamerView()
+   private void TakeDamage(int damage)
    {
-      Vector3 viewPointposition = Camera.main.WorldToViewportPoint(transform.position);
-      return viewPointposition.x >= 0 && viewPointposition.x <= 1 && viewPointposition.y >= 0 && viewPointposition.y <= 1;
+      currentHealth -= damage;
+      if (currentHealth <= 0)
+      {
+         DestroyEnemy();
+      }
    }
 
-   private Vector3 GetRandomPointInCameraView()
+   private void DestroyEnemy()
    {
-      float screenHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
-      float screenHalfHeight = Camera.main.orthographicSize;
-
-      float randomX = Random.Range(-screenHalfWidth, screenHalfWidth);
-      float randomY = Random.Range(-screenHalfHeight, screenHalfHeight);
-
-      return new Vector3(randomX, randomY, 0f);
+      AudioSource audioSource = GetComponent<AudioSource>();
+      if (audioSource != null && audioSource.clip != null)
+      {
+         audioSource.Play();
+      }
+      Destroy(gameObject);
    }
+
 }
