@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1565860831738053938}
@@ -51,6 +51,7 @@ MonoBehaviour:
   distanceToExplode: 1
   explosionEnemy2: {fileID: 25395172098757518, guid: f9ed277ad87018143b7284b9921fe88f, type: 3}
   player: {fileID: 0}
+  Health: 5
 --- !u!54 &3212281095993449303
 Rigidbody:
   m_ObjectHideFlags: 0
