@@ -1608,7 +1608,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: ResetButton
         m_Mode: 5
@@ -2963,7 +2963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canUse: 1
-  menuController: {fileID: 1044988189}
+  menuController: {fileID: 0}
   volumeTextValue: {fileID: 1135865252}
   volumeSlider: {fileID: 2085119635}
   videoPlayerObject: {fileID: 1604563065}
@@ -3503,7 +3503,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: VolumeApply
         m_Mode: 1
@@ -4693,7 +4693,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: NewGameDialogYes
         m_Mode: 1
@@ -4826,7 +4826,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: LoadGameDialogYes
         m_Mode: 1
@@ -5031,7 +5031,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1044988190}
-  - component: {fileID: 1044988189}
+  - component: {fileID: 1044988191}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -5039,30 +5039,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1044988189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044988188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 989aba3201eac9f4a901a39b0285a7ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeTextValue: {fileID: 1135865252}
-  volumeSlider: {fileID: 2085119635}
-  defaultVolume: 50
-  ControllerSenTextValue: {fileID: 1238771199}
-  controllerSenSlider: {fileID: 1672942596}
-  defaultSen: 8
-  mainControllerSen: 8
-  invertYToggle: {fileID: 2050358549}
-  confirmationPrompt: {fileID: 302622733}
-  _newGameLevel: GameScene
-  noSavedGameDialog: {fileID: 1898021615}
-  videoPlayerObject: {fileID: 1604563065}
 --- !u!4 &1044988190
 Transform:
   m_ObjectHideFlags: 0
@@ -5078,6 +5054,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1044988191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044988188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8744ece6f5013384dbb76215daf60da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTextValue: {fileID: 1135865252}
+  volumeSlider: {fileID: 2085119635}
+  defaultVolume: 50
+  ControllerSenTextValue: {fileID: 1238771199}
+  controllerSenSlider: {fileID: 1672942596}
+  defaultSen: 8
+  mainControllerSen: 8
+  invertYToggle: {fileID: 0}
+  confirmationPrompt: {fileID: 302622733}
+  _newGameLevel: 1
+  noSavedGameDialog: {fileID: 1898021615}
+  videoPlayerObject: {fileID: 1604563065}
 --- !u!1 &1060440444
 GameObject:
   m_ObjectHideFlags: 0
@@ -6937,7 +6937,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: GameplayApply
         m_Mode: 1
@@ -7357,7 +7357,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: ResetButton
         m_Mode: 5
@@ -8628,7 +8628,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: GameplayApply
         m_Mode: 1
@@ -9061,7 +9061,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: SetControllerSen
         m_Mode: 0
@@ -9284,7 +9284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1748625630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9936,7 +9936,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: NewGameDialogYes
         m_Mode: 1
@@ -11283,7 +11283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: ExitButton
         m_Mode: 1
@@ -11526,7 +11526,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: VolumeApply
         m_Mode: 1
@@ -11683,7 +11683,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: VolumeApply
         m_Mode: 1
@@ -11825,7 +11825,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1044988189}
+      - m_Target: {fileID: 1044988191}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: setVolume
         m_Mode: 0

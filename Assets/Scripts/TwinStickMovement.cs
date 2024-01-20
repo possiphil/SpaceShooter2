@@ -17,7 +17,8 @@ public class TwinStickMovement : MonoBehaviour
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletModel;
-
+    [SerializeField]private float CurrentPlayerSpeed;
+    [SerializeField]private float pitchChangeSpeed = 15.0f;
     private float cooldown;
     
     private const float SHOOTING_COOLDOWN = 0.3f;
@@ -33,6 +34,7 @@ public class TwinStickMovement : MonoBehaviour
     private PlayerInput playerInput;
 
     private Camera cam;
+    
 
     private void Start()
     {
@@ -62,6 +64,10 @@ public class TwinStickMovement : MonoBehaviour
         HandleMovement();
         HandleRotation();
         HandleShooting();
+        GetPlayerSpeed();
+
+        // Adjust audio pitch based on player speed
+        AdjustAudioPitch(CurrentPlayerSpeed);
     }
 
     private void HandleInput()
@@ -120,9 +126,29 @@ public class TwinStickMovement : MonoBehaviour
         }
     }
 
-
     public void OnDeviceChange(PlayerInput input)
     {
         isGamepad = input.currentControlScheme.Equals("Gamepad");
     }
+
+    public void GetPlayerSpeed()
+    {
+    Vector2 move = new Vector2(movement.x, movement.y);
+    CurrentPlayerSpeed = (move.magnitude / Time.deltaTime) / 100; // Calculate speed by dividing magnitude by time
+    //return CurrentPlayerSpeed;
+    }
+
+    private void AdjustAudioPitch(float targetSpeed)
+{
+    AudioSource audioSource = GetComponent<AudioSource>();
+
+    // Calculate the target pitch based on the target speed
+    float targetPitch = Mathf.Clamp(targetSpeed, 1f, 1.2f);
+
+    // Smoothly interpolate towards the target pitch
+    float smoothedPitch = Mathf.Lerp(audioSource.pitch, targetPitch, Time.deltaTime * pitchChangeSpeed);
+
+    audioSource.pitch = smoothedPitch;
+}
+    
 }

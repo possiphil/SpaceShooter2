@@ -26,7 +26,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject confirmationPrompt = null;
 
     [Header ("Levels to Load")]
-    public string _newGameLevel;
+    public int _newGameLevel;
     private string levelToLoad;
     [SerializeField] private GameObject noSavedGameDialog = null;
 
@@ -69,7 +69,7 @@ public class MenuController : MonoBehaviour
     public void setVolume(float volume)
     {
         AudioListener.volume = volume/100f;
-        volumeTextValue.text = volume.ToString("0");
+        volumeTextValue.text = volume.ToString();
        if (videoPlayer != null)
     {
         videoPlayer.SetDirectAudioVolume(0, volume / 100f);

@@ -28,7 +28,7 @@ public class LoadPrefs : MonoBehaviour
                 videoPlayer = videoPlayerObject.GetComponent<VideoPlayer>();
 
                 float localVolume = PlayerPrefs.GetFloat("masterVolume");
-                volumeTextValue.text = localVolume.ToString("0");
+                volumeTextValue.text = localVolume.ToString();
                 volumeSlider.value = localVolume;
                 AudioListener.volume = localVolume;
                 videoPlayer.SetDirectAudioVolume(0, localVolume);
