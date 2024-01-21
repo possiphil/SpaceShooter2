@@ -32,12 +32,8 @@ public class TwinStickMovement : MonoBehaviour
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletModel;
-<<<<<<< Updated upstream
-    [SerializeField]private float CurrentPlayerSpeed;
-    [SerializeField]private float pitchChangeSpeed = 15.0f;
-    private float cooldown;
-=======
->>>>>>> Stashed changes
+    [SerializeField] private float CurrentPlayerSpeed;
+    [SerializeField] private float pitchChangeSpeed = 15.0f;
     
     private GameObject playerModel;
     private Renderer modelRenderer;
@@ -73,20 +69,16 @@ public class TwinStickMovement : MonoBehaviour
     private PlayerInput playerInput;
 
     private Camera cam;
-    
-<<<<<<< Updated upstream
-
-    private void Start()
-    {
-        cam = Camera.main;
-    }
-=======
     private const float INVINCIBILITY_DURATION = 3f;
     private const float BLINKING_DURATION = 0.2f;
     
     private static readonly WaitForSeconds waitForInvinibilityTime = new WaitForSeconds(INVINCIBILITY_DURATION);
     private static readonly WaitForSeconds waitForBlinkingTime = new WaitForSeconds(BLINKING_DURATION);
->>>>>>> Stashed changes
+    
+    private void Start()
+    {
+        cam = Camera.main;
+    }
 
     private void Awake()
     {
@@ -96,7 +88,7 @@ public class TwinStickMovement : MonoBehaviour
 
         cam = Camera.main;
 
-        playerClass = new Wraith();
+        playerClass = new Assault();
         playerSpeed = playerClass.movementSpeed;
         SHOOTING_COOLDOWN = playerClass.shootingCooldown;
         ABILITY_COOLDOWN = playerClass.ability.cooldown;
@@ -145,24 +137,25 @@ public class TwinStickMovement : MonoBehaviour
 
     private void Update()
     {
+        shootingCooldown -= Time.deltaTime;
+        abilityCooldown -= Time.deltaTime;
+        abilityBar.SetProgress(ABILITY_COOLDOWN - abilityCooldown);
+        
+        // Adjust audio pitch based on player speed
+        AdjustAudioPitch(CurrentPlayerSpeed);
+        
         if (doesAbility) return;
         HandleInput();
         HandleMovement();
         HandleRotation();
         HandleShooting();
-<<<<<<< Updated upstream
         GetPlayerSpeed();
-
-        // Adjust audio pitch based on player speed
-        AdjustAudioPitch(CurrentPlayerSpeed);
-=======
         HandleAbility();
     }
 
     private void FixedUpdate()
     {
         if (doesAbility) return;
->>>>>>> Stashed changes
     }
 
     private void HandleInput()
@@ -212,25 +205,16 @@ public class TwinStickMovement : MonoBehaviour
 
     private void HandleShooting()
     {
-        shootingCooldown -= Time.deltaTime;
-
         if (isShooting && shootingCooldown <= 0)
         {
             Instantiate(bulletModel, firePoint.position, firePoint.rotation);
-<<<<<<< Updated upstream
-            cooldown = SHOOTING_COOLDOWN;
             SoundManager.soundManager.PlayFiringSound();
-=======
             shootingCooldown = SHOOTING_COOLDOWN;
->>>>>>> Stashed changes
         }
     }
 
     private void HandleAbility()
     {
-        abilityCooldown -= Time.deltaTime;
-        abilityBar.SetProgress(ABILITY_COOLDOWN - abilityCooldown);
-        
         if (isUsingAbility && abilityCooldown <= 0) // move != Vector2.zero
         {
             if (playerClass.GetType() == typeof(Assault))
@@ -261,7 +245,6 @@ public class TwinStickMovement : MonoBehaviour
     {
         isGamepad = input.currentControlScheme.Equals("Gamepad");
     }
-<<<<<<< Updated upstream
 
     public void GetPlayerSpeed()
     {
@@ -282,8 +265,6 @@ public class TwinStickMovement : MonoBehaviour
 
     audioSource.pitch = smoothedPitch;
 }
-    
-=======
     
     private void OnTriggerEnter(Collider other)
     {
@@ -354,5 +335,4 @@ public class TwinStickMovement : MonoBehaviour
 
         yield return null;
     }
->>>>>>> Stashed changes
 }

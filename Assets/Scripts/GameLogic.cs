@@ -14,12 +14,8 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private GameObject asteroid;
     
     public static int score;
-<<<<<<< Updated upstream
-    public static int lives = 3;
-    [SerializeField] private GameObject losingCanvas;
-=======
     public static int lives;
->>>>>>> Stashed changes
+    [SerializeField] private GameObject losingCanvas;
 
     private void Start()
     {
